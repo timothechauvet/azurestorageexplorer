@@ -42,6 +42,7 @@ namespace web.Pages
 		private async Task LoadBlobs()
 		{
 			Console.Error.WriteLine("ccc");
+			
 			if (string.IsNullOrEmpty(CurrentContainer))
 				return;
 
@@ -58,11 +59,15 @@ namespace web.Pages
 				{
 					Console.Error.WriteLine("ddd");
 					if (blob.IsFile)
+					{
 						Console.Error.WriteLine("eee");
 						AzureContainerBlobs.Add(blob);
+					}
 					else
+					{
 						Console.Error.WriteLine("fff");
 						AzureContainerFolders.Add(blob);
+					}
 				}
 
 				Console.Error.WriteLine("ggg");
