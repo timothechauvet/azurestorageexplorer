@@ -40,11 +40,16 @@ namespace StorageLibrary.Azure
 			string containerUri = container.Uri.AbsoluteUri.TrimEnd('/');
 
 			List<BlobItemWrapper> results = new List<BlobItemWrapper>();
+			Console.Error.WriteLine(containerUri);
+			Console.Error.WriteLine(container);
+			Console.Error.WriteLine(blobServiceClient);
 			await foreach (BlobHierarchyItem blobItem in container.GetBlobsByHierarchyAsync(BlobTraits.None, BlobStates.None, "/", path, CancellationToken.None))
 			{
 				BlobItemWrapper wrapper = null;
+				Console.Error.WriteLine(blobItem.Blob.Name);
 				if (blobItem.IsBlob)
 				{
+					Console.Error.WriteLine(blobItem.Blob.Name);
 					BlobClient blobClient = container.GetBlobClient(blobItem.Blob.Name);
 					string blobUrl = $"{containerUri}/{blobItem.Blob.Name}";
 
@@ -67,6 +72,7 @@ namespace StorageLibrary.Azure
 				}
 
 				if (wrapper != null && !results.Contains(wrapper))
+					Console.Error.WriteLine(wrapper);
 					results.Add(wrapper);
 			}
 
