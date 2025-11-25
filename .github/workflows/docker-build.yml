@@ -11,7 +11,7 @@ on:
 
 env:
   config: Release
-  docker_user: sebagomez
+  docker_user: timothechauvet
   repository: azurestorageexplorer
 
 jobs:
