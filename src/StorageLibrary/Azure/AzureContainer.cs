@@ -35,25 +35,29 @@ namespace StorageLibrary.Azure
 
 		public async Task<List<BlobItemWrapper>> ListBlobsAsync(string containerName, string path)
 		{
-			Console.Error.WriteLine("hello");
-			BlobServiceClient blobServiceClient = new BlobServiceClient(ConnectionString);
-			BlobContainerClient container = blobServiceClient.GetBlobContainerClient(containerName);
+			Console.Error.WriteLine("--- START ListBlobsAsync ---");
+			Console.Error.WriteLine($"Container Name: {containerName}, Path: {path}");
 
-			string containerUri = container.Uri.AbsoluteUri.TrimEnd('/');
+			BlobServiceClient blobServiceClient = new BlobServiceClient(ConnectionString);
+			Console.Error.WriteLine($"BlobServiceClient created.");
+
+			BlobContainerClient container = blobServiceClient.GetBlobContainerClient(containerName);
+			Console.Error.WriteLine($"BlobContainerClient retrieved for '{containerName}'.");
 
 			List<BlobItemWrapper> results = new List<BlobItemWrapper>();
-			Console.Error.WriteLine(containerUri);
-			Console.Error.WriteLine(container);
-			Console.Error.WriteLine(blobServiceClient);
+			Console.Error.WriteLine($"Initialized results list.");
+
 			await foreach (BlobHierarchyItem blobItem in container.GetBlobsByHierarchyAsync(BlobTraits.None, BlobStates.None, "/", path, CancellationToken.None))
 			{
+				Console.Error.WriteLine("--- Enumerated New Item ---");
 				BlobItemWrapper wrapper = null;
-				Console.Error.WriteLine(blobItem.Blob.Name);
 				if (blobItem.IsBlob)
 				{
-					Console.Error.WriteLine(blobItem.Blob.Name);
+					Console.Error.WriteLine($"Item is a Blob. Name: {blobItem.Blob.Name}");
+					Console.Error.WriteLine($"Blob Content Length: {blobItem.Blob.Properties.ContentLength ?? 0}");
 					BlobClient blobClient = container.GetBlobClient(blobItem.Blob.Name);
-					string blobUrl = $"{containerUri}/{blobItem.Blob.Name}";
+
+					string blobUrl = blobClient.Uri.AbsoluteUri;
 
 					wrapper = new BlobItemWrapper(
 						blobClient.Uri.AbsoluteUri,
@@ -61,20 +65,25 @@ namespace StorageLibrary.Azure
 						CloudProvider.Azure,
 						IsAzurite
 					);
+					Console.Error.WriteLine("Wrapper created for Blob.");
 				}
 				else if (blobItem.IsPrefix)
 				{
-					string prefixBlobUrl = $"{containerUri}/{blobItem.Prefix}";
+					Console.Error.WriteLine($"Item is a Prefix (Folder). Prefix Value: {blobItem.Prefix}");
+					BlobClient prefixClient = container.GetBlobClient(blobItem.Prefix);
+
+					Console.Error.WriteLine($"Generated Prefix URI: {prefixClient.Uri.AbsoluteUri}");
 					wrapper = new BlobItemWrapper(
-						prefixBlobUrl,
+						prefixClient.Uri.AbsoluteUri,
 						0,
 						CloudProvider.Azure,
 						IsAzurite
 					);
+					Console.Error.WriteLine("Wrapper created for Prefix.");
 				}
 
 				if (wrapper != null && !results.Contains(wrapper))
-					Console.Error.WriteLine(wrapper);
+					Console.Error.WriteLine($"Wrapper is NOT NULL. URL: {wrapper.Url}");
 					results.Add(wrapper);
 			}
 
