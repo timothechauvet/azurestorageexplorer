@@ -51,7 +51,6 @@ namespace web.Pages
 				Console.Error.WriteLine("sa buggg");
 				ErrorMessage = exxe.Message;
 				Console.Error.WriteLine(exxe.Message);
-				continue;
 			}
 
 			if (string.IsNullOrEmpty(CurrentContainer))
@@ -66,6 +65,7 @@ namespace web.Pages
 				AzureContainerFolders.Clear();
 				Console.Error.WriteLine("aaa");
 				Console.Error.WriteLine($"CurrentContainer: '{CurrentContainer}'");
+				Console.Error.WriteLine($"CurrentContainer: '{CurrentContainer!}'");
         		Console.Error.WriteLine($"CurrentPath: '{CurrentPath}'");
 
 				foreach (var blob in await AzureStorage!.Containers.ListBlobsAsync(CurrentContainer!, CurrentPath))
