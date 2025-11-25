@@ -45,6 +45,7 @@ namespace StorageLibrary.Azure
 				BlobItemWrapper wrapper = null;
 				if (blobItem.IsBlob)
 				{
+					BlobClient blobClient = container.GetBlobClient(blobItem.Blob.Name);
 					string blobUrl = $"{containerUri}/{blobItem.Blob.Name}";
 
 					wrapper = new BlobItemWrapper(
