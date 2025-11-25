@@ -42,11 +42,11 @@ namespace web.Pages
 		private async Task LoadBlobs()
 		{
 			try {
-				Console.Log.WriteLine($"CurrentContainer: '{CurrentContainer}'");
-				Console.Log.WriteLine($"CurrentPath: '{CurrentPath}'");
+				Console.Error.WriteLine($"CurrentContainer: '{CurrentContainer}'");
+				Console.Error.WriteLine($"CurrentPath: '{CurrentPath}'");
 				Console.Error.WriteLine("ccc");
 			}
-			catch (Exception exx)
+			catch ()
 			{
 				Console.Error.WriteLine("sa buggg");
 				continue;
@@ -62,9 +62,9 @@ namespace web.Pages
 				ShowTable = false;
 				AzureContainerBlobs.Clear();
 				AzureContainerFolders.Clear();
-				Console.Log.WriteLine("aaa");
-				Console.Log.WriteLine($"CurrentContainer: '{CurrentContainer}'");
-        		Console.Log.WriteLine($"CurrentPath: '{CurrentPath}'");
+				Console.Error.WriteLine("aaa");
+				Console.Error.WriteLine($"CurrentContainer: '{CurrentContainer}'");
+        		Console.Error.WriteLine($"CurrentPath: '{CurrentPath}'");
 
 				foreach (var blob in await AzureStorage!.Containers.ListBlobsAsync(CurrentContainer!, CurrentPath))
 				{
