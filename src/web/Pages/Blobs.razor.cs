@@ -66,7 +66,7 @@ namespace web.Pages
 				Console.Error.WriteLine("aaa");
 				Console.Error.WriteLine($"CurrentContainer: '{CurrentContainer}'");
 				Console.Error.WriteLine($"CurrentContainer: '{CurrentContainer!}'");
-        		Console.Error.WriteLine($"CurrentPath: '{CurrentPath}'");
+				Console.Error.WriteLine($"CurrentPath: '{CurrentPath}'");
 
 				foreach (var blob in await AzureStorage!.Containers.ListBlobsAsync(CurrentContainer!, CurrentPath))
 				{

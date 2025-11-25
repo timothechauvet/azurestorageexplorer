@@ -37,19 +37,32 @@ namespace StorageLibrary.Azure
 			BlobServiceClient blobServiceClient = new BlobServiceClient(ConnectionString);
 			BlobContainerClient container = blobServiceClient.GetBlobContainerClient(containerName);
 
+			string containerUri = container.Uri.AbsoluteUri.TrimEnd('/');
+
 			List<BlobItemWrapper> results = new List<BlobItemWrapper>();
 			await foreach (BlobHierarchyItem blobItem in container.GetBlobsByHierarchyAsync(BlobTraits.None, BlobStates.None, "/", path, CancellationToken.None))
 			{
 				BlobItemWrapper wrapper = null;
 				if (blobItem.IsBlob)
 				{
-					BlobClient blobClient = container.GetBlobClient(blobItem.Blob.Name);
+					string blobUrl = $"{containerUri}/{blobItem.Blob.Name}";
 
-					wrapper = new BlobItemWrapper(blobClient.Uri.AbsoluteUri, blobItem.Blob.Properties.ContentLength.HasValue ? blobItem.Blob.Properties.ContentLength.Value : 0, CloudProvider.Azure, IsAzurite);
+					wrapper = new BlobItemWrapper(
+						blobClient.Uri.AbsoluteUri,
+						blobItem.Blob.Properties.ContentLength ?? 0,
+						CloudProvider.Azure,
+						IsAzurite
+					);
 				}
 				else if (blobItem.IsPrefix)
 				{
-					wrapper = new BlobItemWrapper($"{container.Uri}/{blobItem.Prefix}", 0, CloudProvider.Azure, IsAzurite);
+					string prefixBlobUrl = $"{containerUri}/{blobItem.Prefix}";
+					wrapper = new BlobItemWrapper(
+						prefixBlobUrl,
+						0,
+						CloudProvider.Azure,
+						IsAzurite
+					);
 				}
 
 				if (wrapper != null && !results.Contains(wrapper))
