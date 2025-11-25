@@ -35,6 +35,7 @@ namespace StorageLibrary.Azure
 
 		public async Task<List<BlobItemWrapper>> ListBlobsAsync(string containerName, string path)
 		{
+			Console.Error.WriteLine("hello");
 			BlobServiceClient blobServiceClient = new BlobServiceClient(ConnectionString);
 			BlobContainerClient container = blobServiceClient.GetBlobContainerClient(containerName);
 
