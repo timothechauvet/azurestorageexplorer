@@ -46,9 +46,11 @@ namespace web.Pages
 				Console.Error.WriteLine($"CurrentPath: '{CurrentPath}'");
 				Console.Error.WriteLine("ccc");
 			}
-			catch ()
+			catch (Exception exxe)
 			{
 				Console.Error.WriteLine("sa buggg");
+				ErrorMessage = exxe.Message;
+				Console.Error.WriteLine(exxe.Message);
 				continue;
 			}
 
