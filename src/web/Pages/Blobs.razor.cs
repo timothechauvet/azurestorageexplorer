@@ -41,26 +41,34 @@ namespace web.Pages
 
 		private async Task LoadBlobs()
 		{
+			Console.Error.WriteLine("ccc");
 			if (string.IsNullOrEmpty(CurrentContainer))
 				return;
 
 			try
 			{
+				Console.Error.WriteLine("bbb");
 				Loading = true;
 				ShowTable = false;
 				AzureContainerBlobs.Clear();
 				AzureContainerFolders.Clear();
+				Console.Error.WriteLine("aaa");
 
 				foreach (var blob in await AzureStorage!.Containers.ListBlobsAsync(CurrentContainer!, CurrentPath))
 				{
+					Console.Error.WriteLine("ddd");
 					if (blob.IsFile)
+						Console.Error.WriteLine("eee");
 						AzureContainerBlobs.Add(blob);
 					else
+						Console.Error.WriteLine("fff");
 						AzureContainerFolders.Add(blob);
 				}
 
+				Console.Error.WriteLine("ggg");
 				AzureContainerFolders = AzureContainerFolders.OrderBy(b => b.Name).ToList();
 				AzureContainerBlobs = AzureContainerBlobs.OrderBy(b => b.Name).ToList();
+				Console.Error.WriteLine("hhh");
 
 				ShowTable = true;
 				Loading = false;
@@ -69,6 +77,7 @@ namespace web.Pages
 			{
 				HasError = true;
 				ErrorMessage = ex.Message;
+				Console.Error.WriteLine(ex.ToString());
 			}
 		}
 
