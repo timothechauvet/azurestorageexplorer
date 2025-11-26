@@ -46,13 +46,7 @@ namespace StorageLibrary.Azure
 
 			List<BlobItemWrapper> results = new List<BlobItemWrapper>();
 			Console.Error.WriteLine($"Initialized results list.");
-			var options = new GetBlobsByHierarchyOptions
-			{
-				Prefix = path + "/",
-				Delimiter = "/"
-			};
-
-			await foreach (BlobHierarchyItem blobItem in container.GetBlobsByHierarchyAsync(options))
+			await foreach (BlobHierarchyItem blobItem in container.GetBlobsByHierarchyAsync("/", path + "/"))
 			{
 				Console.Error.WriteLine("--- Enumerated New Item ---");
 				BlobItemWrapper wrapper = null;
