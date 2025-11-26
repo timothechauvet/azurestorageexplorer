@@ -79,7 +79,6 @@ namespace StorageLibrary.Azure
 						0,
 						CloudProvider.Azure,
 						IsAzurite,
-						IsFile,
 						false
 					);
 					Console.Error.WriteLine("Wrapper created for Prefix.");
