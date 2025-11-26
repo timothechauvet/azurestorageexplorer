@@ -133,7 +133,7 @@ namespace web.Pages
 		public async Task EnterFolder(EventArgs args, string blobUrl)
 		{
 			Console.Error.WriteLine($"Going into folder/args: {args} blobUrl is {blobUrl}");
-			BlobItemWrapper blob = StorageFactory.GetBlobItemWrapper(blobUrl, false);
+			BlobItemWrapper blob = StorageFactory.GetBlobItemWrapper(blobUrl, 0, false);
 			Console.Error.WriteLine($"blob {blob}");
 			Console.Error.WriteLine($"isfile {blob.IsFile}");
 			Console.Error.WriteLine($"name {blob.FullName}");
@@ -154,7 +154,7 @@ namespace web.Pages
 			string path = "";
 			try
 			{
-				BlobItemWrapper blob = StorageFactory.GetBlobItemWrapper(blobUrl, true);
+				BlobItemWrapper blob = StorageFactory.GetBlobItemWrapper(blobUrl, 0, true);
 				path = await AzureStorage!.Containers.GetBlobAsync(CurrentContainer, blob.FullName);
 
 				FileStream fileStream = File.OpenRead(path);
@@ -180,7 +180,7 @@ namespace web.Pages
 		{
 			try
 			{
-				BlobItemWrapper blob = StorageFactory.GetBlobItemWrapper(blobUrl, true);
+				BlobItemWrapper blob = StorageFactory.GetBlobItemWrapper(blobUrl, 0, true);
 				await AzureStorage!.Containers.DeleteBlobAsync(CurrentContainer, blob.FullName);
 				await LoadBlobs();
 			}
