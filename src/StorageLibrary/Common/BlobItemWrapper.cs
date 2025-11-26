@@ -28,13 +28,13 @@ namespace StorageLibrary.Common
 
 		public BlobItemWrapper(string url) : this(url, 0, CloudProvider.Azure) { }
 
-		public BlobItemWrapper(string url, long size, CloudProvider provider, bool fromAzurite = false)
+		public BlobItemWrapper(string url, long size, CloudProvider provider, bool fromAzurite = false, bool isFile = false)
 		{
 			Url = url;
 			Size = size;
 			Provider = provider;
 			m_isAzurite = fromAzurite;
-			IsFile = !m_internalUri.Segments[m_internalUri.Segments.Length - 1].EndsWith(System.IO.Path.AltDirectorySeparatorChar);
+			IsFile = isFile;
 			Name = HttpUtility.UrlDecode(m_internalUri.Segments[m_internalUri.Segments.Length - 1]);
 
 			switch (provider)

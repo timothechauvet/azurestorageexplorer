@@ -61,7 +61,7 @@ namespace StorageLibrary
 
 		public static BlobItemWrapper GetBlobItemWrapper(string url, long size = 0)
 		{
-			return new BlobItemWrapper(url, size, Instance.m_currentConfig.Provider, Instance.m_currentConfig.IsAzurite);
+			return new BlobItemWrapper(url, size, Instance.m_currentConfig.Provider, Instance.m_currentConfig.IsAzurite, true);
 		}
 	}
 

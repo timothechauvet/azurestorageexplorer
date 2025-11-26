@@ -139,11 +139,11 @@ namespace StorageLibrary.AWS
 				if (entry.Key == path)
 					continue;
 
-				blobs.Add(new BlobItemWrapper($"{uriTemplate}{entry.Key}", entry.Size, CloudProvider.AWS));
+				blobs.Add(new BlobItemWrapper($"{uriTemplate}{entry.Key}", entry.Size, CloudProvider.AWS, true));
 			}
 
 			foreach (string commonPrefix in response.CommonPrefixes)
-				blobs.Add(new BlobItemWrapper($"{uriTemplate}{commonPrefix}", 0, CloudProvider.AWS));
+				blobs.Add(new BlobItemWrapper($"{uriTemplate}{commonPrefix}", 0, CloudProvider.AWS, false));
 
 			return blobs;
 		}

@@ -63,7 +63,8 @@ namespace StorageLibrary.Azure
 						blobClient.Uri.AbsoluteUri,
 						blobItem.Blob.Properties.ContentLength ?? 0,
 						CloudProvider.Azure,
-						IsAzurite
+						IsAzurite,
+						true
 					);
 					Console.Error.WriteLine("Wrapper created for Blob.");
 				}
@@ -77,7 +78,9 @@ namespace StorageLibrary.Azure
 						prefixClient.Uri.AbsoluteUri,
 						0,
 						CloudProvider.Azure,
-						IsAzurite
+						IsAzurite,
+						IsFile,
+						false
 					);
 					Console.Error.WriteLine("Wrapper created for Prefix.");
 				}

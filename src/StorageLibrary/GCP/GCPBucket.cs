@@ -127,13 +127,13 @@ namespace StorageLibrary.Google
 					if (obj.Name == path)
 						continue;
 
-					blobs.Add(new BlobItemWrapper($"{uriTemplate}{obj.Name}", (long)obj.Size, CloudProvider.GCP));
+					blobs.Add(new BlobItemWrapper($"{uriTemplate}{obj.Name}", (long)obj.Size, CloudProvider.GCP, true));
 				}
 			}
 
 			if (listObjects.Prefixes != null)
 				foreach (string commonPrefix in listObjects.Prefixes)
-					blobs.Add(new BlobItemWrapper($"{uriTemplate}{commonPrefix}", 0, CloudProvider.GCP));
+					blobs.Add(new BlobItemWrapper($"{uriTemplate}{commonPrefix}", 0, CloudProvider.GCP, false));
 
 			return blobs;
 		}
