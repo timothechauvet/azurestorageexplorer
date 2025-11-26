@@ -70,15 +70,18 @@ namespace web.Pages
 
 				foreach (var blob in await AzureStorage!.Containers.ListBlobsAsync(CurrentContainer!, CurrentPath))
 				{
-					Console.Error.WriteLine("ddd");
+					Console.Error.WriteLine($"Name: '{blob.Name}'");
+					Console.Error.WriteLine($"Path: '{blob.Path}'");
+					Console.Error.WriteLine($"Container: '{blob.Container}'");
+					Console.Error.WriteLine($"FullName: '{blob.FullName}'");
+					Console.Error.WriteLine($"IsFile: '{blob.IsFile}'");
+					Console.Error.WriteLine($"Url: '{blob.Url}'");
 					if (blob.IsFile)
 					{
-						Console.Error.WriteLine("eee");
 						AzureContainerBlobs.Add(blob);
 					}
 					else
 					{
-						Console.Error.WriteLine("fff");
 						AzureContainerFolders.Add(blob);
 					}
 				}
