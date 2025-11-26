@@ -46,7 +46,7 @@ namespace StorageLibrary.Azure
 
 			List<BlobItemWrapper> results = new List<BlobItemWrapper>();
 			Console.Error.WriteLine($"Initialized results list.");
-			await var blobItems = container.GetBlobsByHierarchyAsync(BlobTraits.None, BlobStates.None, "/", path, CancellationToken.None);
+			await blobItems = container.GetBlobsByHierarchyAsync(BlobTraits.None, BlobStates.None, "/", path, CancellationToken.None);
 			Console.Error.WriteLine($"this is the hierarchy container async {blobItems}.");
 
 			foreach (BlobHierarchyItem blobItem in blobItems)
