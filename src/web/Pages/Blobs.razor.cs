@@ -132,7 +132,12 @@ namespace web.Pages
 
 		public async Task EnterFolder(EventArgs args, string blobUrl)
 		{
+			Console.Error.WriteLine($"Going into folder/args: {args} blobUrl is {blobUrl}");
 			BlobItemWrapper blob = StorageFactory.GetBlobItemWrapper(blobUrl);
+			Console.Error.WriteLine($"blob {blob}");
+			Console.Error.WriteLine($"isfile {blob.IsFile}");
+			Console.Error.WriteLine($"name {blob.FullName}");
+			Console.Error.WriteLine($"path {blob.CurrentPath}");
 			if (blob.IsFile)
 				return;
 
@@ -140,7 +145,9 @@ namespace web.Pages
 			UploadFolder = CurrentPath;
 
 			StateHasChanged();
+			Console.Error.WriteLine("has changed");
 			await LoadBlobs();
+			Console.Error.WriteLine("blobs loaded");
 		}
 
 		public async Task DownloadBlob(EventArgs args, string blobUrl)
