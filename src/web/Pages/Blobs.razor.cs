@@ -137,7 +137,6 @@ namespace web.Pages
 			Console.Error.WriteLine($"blob {blob}");
 			Console.Error.WriteLine($"isfile {blob.IsFile}");
 			Console.Error.WriteLine($"name {blob.FullName}");
-			Console.Error.WriteLine($"path {blob.CurrentPath}");
 			if (blob.IsFile)
 				return;
 
