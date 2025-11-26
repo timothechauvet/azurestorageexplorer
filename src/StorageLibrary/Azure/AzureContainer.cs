@@ -46,15 +46,21 @@ namespace StorageLibrary.Azure
 
 			List<BlobItemWrapper> results = new List<BlobItemWrapper>();
 			Console.Error.WriteLine($"Initialized results list.");
-			await blobItems = container.GetBlobsByHierarchyAsync(BlobTraits.None, BlobStates.None, "/", path, CancellationToken.None);
-			Console.Error.WriteLine($"this is the hierarchy container async {blobItems}.");
 
-			foreach (BlobHierarchyItem blobItem in blobItems)
+			await foreach (BlobHierarchyItem blobItem in container.GetBlobsByHierarchyAsync(
+				traits: BlobTraits.None, 
+				states: BlobStates.None,
+				delimiter: "/", 
+				prefix: path, 
+				cancellationToken: CancellationToken.None))
 			{
 				Console.Error.WriteLine("--- Enumerated New Item ---");
+				Console.Error.WriteLine($"Delimiter: {blobItem.Delimiter}");
+				Console.Error.WriteLine($"Path: {blobItem.Prefix}");
 				BlobItemWrapper wrapper = null;
 				if (blobItem.IsBlob)
 				{
+					Console.Error.WriteLine($"Item is a Blob. Name: {blobItem.Blob.Name}");
 					Console.Error.WriteLine($"Item is a Blob. Name: {blobItem.Blob.Name}");
 					Console.Error.WriteLine($"Blob Content Length: {blobItem.Blob.Properties.ContentLength ?? 0}");
 					BlobClient blobClient = container.GetBlobClient(blobItem.Blob.Name);
