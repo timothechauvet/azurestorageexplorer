@@ -72,7 +72,7 @@ namespace StorageLibrary.Mocks
 				if (MockUtils.FolderStructure[containerName].Contains(blobName))
 					throw new InvalidOperationException($"Blob '{blobName}' already exists in Container '{containerName}'");
 
-				BlobItemWrapper blob = StorageFactory.GetBlobItemWrapper($"{MockUtils.FAKE_URL}/{containerName}/{blobName}", true);
+				BlobItemWrapper blob = StorageFactory.GetBlobItemWrapper($"{MockUtils.FAKE_URL}/{containerName}/{blobName}", 0, true);
 				if (!MockUtils.FolderStructure[containerName].Contains(blob.Path))
 					MockUtils.FolderStructure[containerName].Add(blob.Path);
 
